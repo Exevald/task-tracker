@@ -15,3 +15,6 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+# local storage in file
+storage.json
