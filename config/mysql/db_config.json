@@ -1,0 +1,5 @@
+{
+  "dsn": "mysql:host=lecture-db;dbname=lecture",
+  "userName": "root",
+  "password": "1234"
+}
