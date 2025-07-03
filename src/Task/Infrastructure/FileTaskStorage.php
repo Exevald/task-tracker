@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__ . '/../Model/TaskStorageInterface.php';
-require_once __DIR__ . '/../Model/Task.php';
+namespace App\Task\Infrastructure;
+
+use App\Task\Model\Task;
+use App\Task\Model\TaskStorageInterface;
 
 class FileTaskStorage implements TaskStorageInterface
 {
@@ -17,6 +20,7 @@ class FileTaskStorage implements TaskStorageInterface
         $this->tasks = $this->loadTasks();
     }
 
+    /** @return Task[] */
     public function getTasks(): array
     {
         return $this->tasks;
@@ -36,6 +40,7 @@ class FileTaskStorage implements TaskStorageInterface
         return $this->tasks[count($this->tasks) - 1]->getId() + 1;
     }
 
+    /** @return Task[] */
     private function loadTasks(): array
     {
         if (!file_exists($this->filePath)) {

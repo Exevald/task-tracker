@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../Model/Task.php';
+use App\Task\Model\Task;
+
 /**
  * @var Task[] $tasks;
  */

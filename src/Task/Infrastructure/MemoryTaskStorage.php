@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__ . '/../Model/TaskStorageInterface.php';
-require_once __DIR__ . '/../Model/Task.php';
+namespace App\Task\Infrastructure;
+
+use App\Task\Model\Task;
+use App\Task\Model\TaskStorageInterface;
 
 class MemoryTaskStorage implements TaskStorageInterface
 {
@@ -15,6 +18,7 @@ class MemoryTaskStorage implements TaskStorageInterface
         $this->tasks = [];
     }
 
+    /** @return Task[] */
     public function getTasks(): array
     {
         return $this->tasks;

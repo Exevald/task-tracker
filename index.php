@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__ . '/src/Task/Model/Task.php';
-require_once __DIR__ . '/src/Task/Model/TaskStorageInterface.php';
-require_once __DIR__ . '/src/Task/Infrastructure/FileTaskStorage.php';
-require_once __DIR__ . '/src/Task/Controller/TaskController.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
-$taskStorage = new FileTaskStorage();
+use App\Task\Controller\TaskController;
+
+$taskStorage = new App\Task\Infrastructure\FileTaskStorage();
 $taskController = new TaskController($taskStorage);
 $taskController->index();

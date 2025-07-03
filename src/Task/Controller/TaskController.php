@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/../Model/Task.php';
-require_once __DIR__ . '/../Model/TaskStorageInterface.php';
+namespace App\Task\Controller;
+
+use App\Task\Model\Task;
+use App\Task\Model\TaskStorageInterface;
 
 class TaskController
 {
@@ -25,6 +27,20 @@ class TaskController
         $task = new Task($id, $taskTitle);
         $this->taskStorage->addTask($task);
 
+        $this->getTask($task->getId());
+    }
+
+    public function getTask(int $taskId): void
+    {
+        $tasks = $this->taskStorage->getTasks();
+
+        foreach ($tasks as $task) {
+            if ($task->getId() === $taskId) {
+                $this->currentTask($task);
+                return;
+            }
+        }
+
         $this->index();
     }
 
@@ -32,5 +48,10 @@ class TaskController
     {
         $tasks = $this->taskStorage->getTasks();
         require_once __DIR__ . '/../View/tasks_list.php';
+    }
+
+    public function currentTask(Task $task): void
+    {
+        require_once __DIR__ . '/../View/task.php';
     }
 }

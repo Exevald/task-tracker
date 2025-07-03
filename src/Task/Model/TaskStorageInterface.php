@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-require_once __DIR__ . '/Task.php';
+namespace App\Task\Model;
 
 interface TaskStorageInterface
 {
