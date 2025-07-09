@@ -4,17 +4,17 @@ declare(strict_types=1);
 namespace App\Task\Controller;
 
 use App\Task\Model\Task;
-use App\Task\Model\TaskStorageInterface;
+use App\Task\Service\TaskServiceInterface;
 
 class TaskController
 {
-    private TaskStorageInterface $taskStorage;
+    private TaskServiceInterface $taskService;
 
     public function __construct(
-        TaskStorageInterface $taskStorage
+        TaskServiceInterface $taskService
     )
     {
-        $this->taskStorage = $taskStorage;
+        $this->taskService = $taskService;
     }
 
     public function addTask(array $request): void
@@ -23,30 +23,23 @@ class TaskController
         if (!$taskTitle) {
             return;
         }
-        $id = $this->taskStorage->getNextTaskId();
-        $task = new Task($id, $taskTitle);
-        $this->taskStorage->addTask($task);
-
-        $this->getTask($task->getId());
+        $id = $this->taskService->addTask($taskTitle);
+        $this->getTask($id);
     }
 
     public function getTask(int $taskId): void
     {
-        $tasks = $this->taskStorage->getTasks();
-
-        foreach ($tasks as $task) {
-            if ($task->getId() === $taskId) {
-                $this->currentTask($task);
-                return;
-            }
+        $task = $this->taskService->getTask($taskId);
+        if ($task) {
+            $this->currentTask($task);
+            return;
         }
-
         $this->index();
     }
 
     public function index(): void
     {
-        $tasks = $this->taskStorage->getTasks();
+        $tasks = $this->taskService->getTasks();
         require_once __DIR__ . '/../View/tasks_list.php';
     }
 
